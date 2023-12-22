@@ -21,8 +21,8 @@ import com.aboni.nmea.n2k.N2KMessageHeader;
 import com.aboni.nmea.n2k.PGNDataParseException;
 import net.sf.marineapi.nmea.util.Position;
 
+import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
 
 import static com.aboni.nmea.n2k.N2KLookupTables.LOOKUP_MAPS.*;
 import static com.aboni.nmea.n2k.messages.N2KMessagePGNs.GNSS_POSITION_UPDATE_PGN;
@@ -77,7 +77,7 @@ public class N2KGNSSPositionUpdateImpl extends N2KMessageImpl implements MsgGNSS
         int daysSince1970 = (int) N2KBitUtils.parseIntegerSafe(data, 8, 0, 16, 0);
         double secsSinceMidnight = N2KBitUtils.parseDoubleSafe(data, 24, 32, 0.0001, false);
         if (daysSince1970 > 0 && N2KBitUtils.isValidDouble(secsSinceMidnight)) {
-            timestamp = Instant.ofEpochMilli(0).atZone(ZoneId.of("UTC")).plusDays(daysSince1970).plusNanos((long) (secsSinceMidnight * 1e9)).toInstant();
+            timestamp = Instant.ofEpochMilli(0).plus(Duration.ofDays(daysSince1970).plusMillis((long) (secsSinceMidnight * 1000L)));
         }
 
         gnssType = N2KBitUtils.parseEnum(data, 248, 0, 4, N2KLookupTables.getTable(GNS));
