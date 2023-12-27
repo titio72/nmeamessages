@@ -15,12 +15,6 @@ along with NMEAMessages.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.aboni.nmea;
 
-import com.aboni.nmea.n2k.messages.N2KMessageFactory;
-import com.aboni.nmea.n2k.messages.impl.N2KMessageFactoryImpl;
-import com.aboni.nmea.nmea0183.Message2NMEA0183;
-import com.aboni.nmea.nmea0183.NMEA0183MessageFactory;
-import com.aboni.nmea.nmea0183.impl.Message2NMEA0183Impl;
-import com.aboni.nmea.nmea0183.impl.NMEA0183MessageFactoryImpl;
 import com.aboni.nmea.n2k.N2KFastCache;
 import com.aboni.nmea.n2k.N2KMessageParserFactory;
 import com.aboni.nmea.n2k.N2KStream;
@@ -29,6 +23,12 @@ import com.aboni.nmea.n2k.impl.N2KFastCacheImpl;
 import com.aboni.nmea.n2k.impl.N2KMessageParserFactoryImpl;
 import com.aboni.nmea.n2k.impl.N2KStreamImpl;
 import com.aboni.nmea.n2k.impl.PGNSourceFilterImpl;
+import com.aboni.nmea.n2k.messages.N2KMessageFactory;
+import com.aboni.nmea.n2k.messages.impl.N2KMessageFactoryImpl;
+import com.aboni.nmea.nmea0183.Message2NMEA0183;
+import com.aboni.nmea.nmea0183.NMEA0183MessageFactory;
+import com.aboni.nmea.nmea0183.impl.Message2NMEA0183Impl;
+import com.aboni.nmea.nmea0183.impl.NMEA0183MessageFactoryImpl;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 
@@ -37,10 +37,10 @@ public class NMEAMessagesModule extends AbstractModule {
     protected void configure() {
         bind(Message2NMEA0183.class).to(Message2NMEA0183Impl.class);
         bind(N2KMessageFactory.class).to(N2KMessageFactoryImpl.class).in(Singleton.class);
-        bind(NMEA0183MessageFactory.class).to(NMEA0183MessageFactoryImpl.class);
-        bind(N2KMessageParserFactory.class).to(N2KMessageParserFactoryImpl.class);
+        bind(NMEA0183MessageFactory.class).to(NMEA0183MessageFactoryImpl.class).in(Singleton.class);
+        bind(N2KMessageParserFactory.class).to(N2KMessageParserFactoryImpl.class).in(Singleton.class);
         bind(N2KFastCache.class).to(N2KFastCacheImpl.class);
         bind(N2KStream.class).to(N2KStreamImpl.class);
-        bind(PGNSourceFilter.class).to(PGNSourceFilterImpl.class);
+        bind(PGNSourceFilter.class).to(PGNSourceFilterImpl.class).in(Singleton.class);
     }
 }

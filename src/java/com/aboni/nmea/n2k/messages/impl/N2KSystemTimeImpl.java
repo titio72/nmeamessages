@@ -90,5 +90,4 @@ public class N2KSystemTimeImpl extends N2KMessageImpl implements MsgSystemTime {
     public JSONObject toJSON() {
         return theTime.toJSON();
     }
-
 }

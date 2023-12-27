@@ -29,5 +29,4 @@ public interface MsgSystemTime extends Message {
     default String getMessageContentType() {
         return "Time";
     }
-
 }

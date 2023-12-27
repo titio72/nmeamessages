@@ -15,7 +15,9 @@ along with NMEAMessages.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.aboni.nmea.message;
 
+import com.aboni.utils.Utils;
 import net.sf.marineapi.nmea.util.Position;
+import org.json.JSONObject;
 
 public interface MsgPosition extends Message {
 
@@ -26,4 +28,16 @@ public interface MsgPosition extends Message {
         return "Position";
     }
 
+    @Override
+    default JSONObject toJSON() {
+        JSONObject j = new JSONObject();
+        j.put("topic", "position");
+        if (getPosition() != null) {
+            j.put("latitude", Utils.formatLatitude(getPosition().getLatitude()));
+            j.put("longitude", Utils.formatLongitude(getPosition().getLongitude()));
+            j.put("dec_latitude", getPosition().getLatitude());
+            j.put("dec_longitude", getPosition().getLongitude());
+        }
+        return j;
+    }
 }

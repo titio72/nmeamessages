@@ -16,6 +16,7 @@ along with NMEAMessages.  If not, see <http://www.gnu.org/licenses/>.
 package com.aboni.nmea.message.impl;
 
 import com.aboni.nmea.message.MsgSystemTime;
+import org.json.JSONObject;
 
 import java.time.Instant;
 
@@ -55,6 +56,16 @@ public class MsgSystemTimeImpl implements MsgSystemTime {
     @Override
     public String toString() {
         return String.format("Time: time {%s} Source {%s}", getTime(), getTimeSourceType());
+    }
+
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject res = new JSONObject();
+        res.put("topic", "systime");
+        res.put("sourceType", getTimeSourceType());
+        res.put("time", getTime().toString());
+        return res;
     }
 
 }

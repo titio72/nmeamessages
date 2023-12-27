@@ -19,6 +19,7 @@ import com.aboni.nmea.message.GNSSFix;
 import com.aboni.nmea.message.MsgGNSSDOPs;
 import com.aboni.nmea.n2k.N2KMessageHeader;
 import com.aboni.nmea.n2k.PGNDataParseException;
+import org.json.JSONObject;
 
 import static com.aboni.nmea.n2k.messages.N2KMessagePGNs.GNSS_DOP_PGN;
 
@@ -98,11 +99,21 @@ public class N2KGNSSDOPsImpl extends N2KMessageImpl implements MsgGNSSDOPs {
         return fix.toString();
     }
 
-
     @Override
     public String toString() {
         return String.format("PGN {%s} Source {%d} Fix {%s} HDOP {%.1f} VDOP {%.1f} TDOP {%.1f}",
                 GNSS_DOP_PGN, getHeader().getSource(), getFixDescription(),
                 getHDOP(), getVDOP(), getTDOP());
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject res = new JSONObject();
+        res.put("topic", "gnssdop");
+        res.put("hdop", getHDOP());
+        res.put("vdop", getVDOP());
+        res.put("tdop", getTDOP());
+        res.put("fix", getFixDescription());
+        return res;
     }
 }

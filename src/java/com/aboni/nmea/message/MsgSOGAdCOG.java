@@ -15,6 +15,8 @@ along with NMEAMessages.  If not, see <http://www.gnu.org/licenses/>.
 
 package com.aboni.nmea.message;
 
+import org.json.JSONObject;
+
 public interface MsgSOGAdCOG extends Message {
 
     int getSID();
@@ -30,5 +32,14 @@ public interface MsgSOGAdCOG extends Message {
     @Override
     default String getMessageContentType() {
         return "SOGAndCOG";
+    }
+
+    @Override
+    default JSONObject toJSON() {
+        JSONObject j = new JSONObject();
+        j.put("sog", getSOG());
+        j.put("cog", getCOG());
+        j.put("cogReference", getCOGReference());
+        return j;
     }
 }
