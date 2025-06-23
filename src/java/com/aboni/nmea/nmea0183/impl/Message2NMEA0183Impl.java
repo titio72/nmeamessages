@@ -242,7 +242,18 @@ public class Message2NMEA0183Impl implements Message2NMEA0183 {
             mwv.setSpeedUnit(Units.KNOT);
             mwv.setTrue(!apparent);
             mwv.setStatus(DataStatus.ACTIVE);
-            return new Sentence[]{mwv};
+
+            if (apparent) {
+                VWRSentence vwr = (VWRSentence) SentenceFactory.getInstance().createParser(TalkerId.II, SentenceId.VWR);
+                vwr.setSpeedKnots(windSpeed);
+                vwr.setDirectionLeftRight((windAngle < 0 || windAngle > 180) ? Direction.LEFT : Direction.RIGHT);
+                if (windAngle < 0) vwr.setWindAngle(-windAngle);
+                else if (windAngle > 180) vwr.setWindAngle(360 - windAngle);
+                else vwr.setWindAngle(windAngle);
+                return new Sentence[] {mwv, vwr};
+            } else {
+                return new Sentence[] {mwv};
+            }
         }
         return TEMPLATE;
     }

@@ -43,6 +43,8 @@ public class N2KMessagePGNs {
     public static final int HEADING_PGN = 127250;
     public static final int GNSS_DOP_PGN = 129539;
     public static final int BATTERY_PGN = 127508;
+    public static final int ENGINE_PGN = 127488;
+    public static final int ENGINE_PARAMS_PGN = 127489;
     public static final int DC_DETAILED_STATUS_PGN = 127506;
 
     public static final int AIS_ATON_PGN = 129041;
